@@ -15,7 +15,6 @@ class AuthUser
             'guru' => 'guru.dashboard',
             'orangtua' => 'orangtua.dashboard',
             'siswa' => 'siswa.dashboard',
-            'walikelas' => 'waliKelas.dashboard',
             default => 'login'
         };
     }

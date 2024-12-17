@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Prestasi;
 use App\Models\Siswa;
 use App\Models\Pelanggaran;
+use App\models\waliKelas;
 use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
@@ -25,12 +26,25 @@ class HomeController extends Controller
         return view('orangtua.dashboard');
     }
 
-    public function siswaDashboard(){
-        $siswas = Auth::user()->userType == 'siswa';
-        return view('siswa.dashboard', compact('siswas'));
+    public function siswaDashboard()
+    {
+        $user = Auth::user();
+    
+        // Ambil siswa beserta relasi prestasi dan pelanggaran
+        $siswa = Siswa::with(['prestasi', 'pelanggaran'])->where('user_id', $user->id)->first();
+    
+        // Jika siswa tidak ditemukan
+        if (!$siswa) {
+            return redirect()->back()->with('error', 'Data siswa tidak ditemukan.');
+        }
+        
+        $totalPoin = $siswa->pelanggaran->sum('point');
+        // Kirim data ke view
+        return view('siswa.dashboard', [
+            'prestasis' => $siswa->prestasi,
+            'pelanggarans' => $siswa->pelanggaran,
+            'totalPoin' => $totalPoin,
+        ]);
     }
-
-    public function walikelasDashboard(){
-        return view('waliKelas.dashboard');
-    }
+    
 }

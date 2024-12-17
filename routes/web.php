@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PrestasiController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PelanggaranController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -31,6 +32,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/guru/prestasi', [PrestasiController::class, 'index'])->name('guru.prestasi');
         Route::get('/guru/prestasi/create', [PrestasiController::class, 'create'])->name('guru.prestasi.create');
         Route::post('/guru/prestasi', [PrestasiController::class, 'store'])->name('guru.prestasi.store');
+        // Pelanggaran routes
+        Route::get('/guru/pelanggaran', [PelanggaranController::class, 'index'])->name('guru.pelanggaran');
+        Route::get('/guru/pelanggaran/create', [PelanggaranController::class, 'create'])->name('guru.pelanggaran.create');
+        Route::post('/guru/pelanggaran', [PelanggaranController::class, 'store'])->name('guru.pelanggaran.store');
     });
 
     Route::middleware('user-access:orangtua')->group(function () {
@@ -39,10 +44,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::middleware('user-access:siswa')->group(function () {
         Route::get('/siswa/dashboard', [HomeController::class, 'siswaDashboard'])->name('siswa.dashboard');
-    });
-
-    Route::middleware('user-access:walikelas')->group(function () {
-        Route::get('/walikelas/dashboard', [HomeController::class, 'walikelasDashboard'])->name('walikelas.dashboard');
     });
 });
 

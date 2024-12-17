@@ -15,6 +15,8 @@ class waliKelas extends Model
         'kelas_id',
     ];
 
+    
+
     public function kelas()
     {
         return $this->belongsTo(Kelas::class);

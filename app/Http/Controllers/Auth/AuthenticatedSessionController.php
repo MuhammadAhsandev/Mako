@@ -38,7 +38,6 @@ class AuthenticatedSessionController extends Controller
             'guru' => 'guru.dashboard',
             'orangtua' => 'orangtua.dashboard',
             'siswa' => 'siswa.dashboard',
-            'walikelas' => 'waliKelas.dashboard',
             default => 'dashboard',
         };
     }

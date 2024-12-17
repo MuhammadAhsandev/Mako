@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Auth;
                 <a href="{{route('guru.prestasi')}}" class="block bg-green-200 text-green-800 p-2 rounded hover:bg-green-300">Input Prestasi</a>
             </li>
             <li>
-                <a href="#" class="block bg-blue-200 text-blue-800 p-2 rounded hover:bg-blue-300">Laporan Pelanggaran</a>
+                <a href="{{route('guru.pelanggaran')}}" class="block bg-blue-200 text-blue-800 p-2 rounded hover:bg-blue-300">Laporan Pelanggaran</a>
             </li>
         </ul>
     </div>

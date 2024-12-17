@@ -26,13 +26,21 @@ use Illuminate\Support\Facades\Auth;
     <form action="{{ route('guru.prestasi.store') }}" method="POST" class="space-y-6">
         @csrf
 
-        <!-- Pilih Siswa -->
+        <!-- Pencarian dan Pilih Siswa -->
         <div class="grid grid-cols-1 gap-4">
+            <div>
+                <label for="search_siswa" class="block font-medium text-gray-700 mb-2">Cari Siswa</label>
+                <input type="text"
+                       id="search_siswa"
+                       class="w-full p-2 border rounded focus:ring-blue-500 focus:border-blue-500"
+                       placeholder="Masukkan nama siswa untuk mencari">
+            </div>
+
             <div>
                 <label for="siswa_id" class="block font-medium text-gray-700 mb-2">Nama Siswa <span class="text-red-500">*</span></label>
                 <select name="siswa_id"
                         id="siswa_id"
-                        class="w-full p-2 borderrounded focus:ring-blue-500 focus:border-blue-500 @error('siswa_id') border-red-500 @enderror"
+                        class="w-full p-2 border rounded focus:ring-blue-500 focus:border-blue-500 @error('siswa_id') border-red-500 @enderror"
                         required>
                     <option value="">-- Pilih Siswa --</option>
                     @foreach ($siswas as $siswa)
@@ -46,6 +54,29 @@ use Illuminate\Support\Facades\Auth;
                 @enderror
             </div>
         </div>
+
+        <!-- JavaScript untuk Pencarian dan Pilihan Otomatis -->
+        <script>
+            document.getElementById('search_siswa').addEventListener('input', function () {
+                const query = this.value.toLowerCase();
+                const siswaSelect = document.getElementById('siswa_id');
+                const options = siswaSelect.options;
+                let found = false;
+
+                for (let i = 0; i < options.length; i++) {
+                    const option = options[i];
+                    if (option.textContent.toLowerCase().includes(query)) {
+                        option.style.display = 'block';
+                        if (!found && option.value !== "") {
+                            siswaSelect.value = option.value; // Pilih otomatis opsi pertama yang cocok
+                            found = true;
+                        }
+                    } else if (option.value !== "") {
+                        option.style.display = 'none';
+                    }
+                }
+            });
+        </script>
 
         <!-- Detail Prestasi -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">

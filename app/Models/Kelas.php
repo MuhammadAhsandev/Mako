@@ -15,6 +15,12 @@ class Kelas extends Model
         'tahun_ajaran',
     ];
 
+    // Model Siswa
+    public function kelas()
+    {
+        return $this->belongsTo(Kelas::class);
+    }
+
     public function siswa()
     {
         return $this->hasMany(Siswa::class);
